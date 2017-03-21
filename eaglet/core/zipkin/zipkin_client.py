@@ -24,6 +24,10 @@ TYPE2STRING = {
 	TYPE_CALL_SERVICE: 'call_service'
 }
 
+
+zipkin_messages = []
+
+
 class ZipkinClient(object):
 	"""docstring for ZipkinClient"""
 	def __init__(self, service_name, zid, zdepth, fZindex=0):
@@ -36,6 +40,8 @@ class ZipkinClient(object):
 		self.fZindex = fZindex
 
 	def sendMessge(self, type, responseTime, method='', resource='', data='', isCallDownstream=0):
+		global zipkin_messages
+
 		self.zindex += 1
 		self.type = TYPE2STRING[int(type)]
 		self.responseTime = responseTime
@@ -45,7 +51,8 @@ class ZipkinClient(object):
 		self.isCallDownstream = isCallDownstream
 		data = self.getData()
 		if IS_DEPLOY:
-			logging.info(json.dumps(data))
+			# logging.info(json.dumps(data))
+			zipkin_messages.append(data)
 
 
 	def getData(self):

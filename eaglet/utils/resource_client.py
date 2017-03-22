@@ -191,7 +191,7 @@ class Inner(object):
 		finally:
 			stop = time()
 			duration = stop - start
-			zipkinClient.sendMessge(zipkin_client.TYPE_CALL_SERVICE, duration, method=method, resource='', data='')
+			zipkinClient.sendMessge(zipkin_client.TYPE_CALL_SERVICE, duration, method=method, resource=url, data='')
 
 	def __log(self, is_success, url, params, method, failure_type='', failure_msg=''):
 		msg = {

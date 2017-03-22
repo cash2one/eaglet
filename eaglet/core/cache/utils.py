@@ -70,14 +70,30 @@ def set_cache(key, value, timeout=0):
 	@return:
 	"""
 	pickled_value = pickle.dumps(value)
+	start = time()
 	if timeout:
 		r.set(key, pickled_value, ex=timeout)
 	else:
 		r.set(key, pickled_value)
+	stop = time()
+	duration = stop - start
+	query = 'set `cache`: {}'.format(key)
+	if zipkin_client.zipkinClient:
+		zipkin_client.zipkinClient.sendMessge(zipkin_client.TYPE_CALL_REDIS, duration, method='set', resource=query,
+		                                      data='')
 
 @modify_keys
 def get_cache(key):
+	start = time()
+
 	value = r.get(key)
+
+	stop = time()
+	duration = stop - start
+	query = 'get `cache`: `{}` . {}'.format(key, 'hit' if value else 'MISS!!')
+	if zipkin_client.zipkinClient:
+		zipkin_client.zipkinClient.sendMessge(zipkin_client.TYPE_CALL_REDIS, duration, method='get', resource=query,
+		                                      data='')
 	if not value:
 		return value
 	return pickle.loads(value)
@@ -85,11 +101,28 @@ def get_cache(key):
 
 @modify_keys
 def get_many(keys):
-	return [pickle.loads(value) if value else value for value in r.mget(keys)]
+	start = time()
+	result = [pickle.loads(value) if value else value for value in r.mget(keys)]
+	stop = time()
+	duration = stop - start
+	query = 'get many: {}'.format(keys)
+	if zipkin_client.zipkinClient:
+		zipkin_client.zipkinClient.sendMessge(zipkin_client.TYPE_CALL_REDIS, duration, method='mget', resource=query,
+		                                      data='')
+	return result
 
 @modify_keys
 def delete_cache(key):
+	start = time()
+
 	r.delete(key)
+
+	stop = time()
+	duration = stop - start
+	query = 'delete: {}'.format(key)
+	if zipkin_client.zipkinClient:
+		zipkin_client.zipkinClient.sendMessge(zipkin_client.TYPE_CALL_REDIS, duration, method='delete', resource=query,
+		                                      data='')
 	#r.delete(':1:'+key)
 
 @modify_keys

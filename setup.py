@@ -45,7 +45,7 @@ print packages
 
 setup(
 	name='eaglet', 
-	version='1.0',
+	version='1.0.1',
 	url='https://git2.weizzz.com:84/microservice/eaglet',
 	author='weizoom microservice infrastructure team', 
 	author_email='chenru@weizoom.com',

@@ -10,8 +10,6 @@ import sys
 
 from falcon import Request
 
-from eaglet.utils.common_util import is_base_type
-
 
 def get_req_data(req):
 	if req:
@@ -207,8 +205,7 @@ class ExceptionReporter(object):
 		for i, frame in enumerate(frames):
 			if 'vars' in frame:
 				frame['vars'] = [{'key': k, 'value': force_text(v)} for k, v in frame['vars'] if
-				                 (not k.startswith("__") and not k.endswith("__") and k != 'response') and is_base_type(
-					                 v)]
+				                 (not k.startswith("__") and not k.endswith("__") and k != 'response')]
 			frames[i] = frame
 
 		# bussines_data = {}

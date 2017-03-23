@@ -43,9 +43,11 @@ for dirpath, dirnames, filenames in os.walk(eaglet_dir):
 
 print packages
 
+version = __import__('eaglet').get_version()
+
 setup(
 	name='eaglet', 
-	version='1.0.3',
+	version=version,
 	url='https://git2.weizzz.com:84/microservice/eaglet',
 	author='weizoom microservice infrastructure team', 
 	author_email='chenru@weizoom.com',

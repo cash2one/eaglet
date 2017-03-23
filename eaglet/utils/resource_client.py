@@ -178,7 +178,7 @@ class Inner(object):
 					self.__log(False, url, params, method, 'ServiceProcessFailure', 'BUSINESS_CODE:' + str(code))
 					return None
 			else:
-				self.__log(False, url, params, method, 'ServerResponseFailure',
+				self.__log(False, url, params, method, 'NginxError',
 				           'HTTP_STATUS_CODE:' + str(resp.status_code))
 				return None
 

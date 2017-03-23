@@ -208,7 +208,7 @@ class Inner(object):
 
 		if resp:
 			msg['http_code'] = resp.status_code
-			if method == 'get':
+			if method == 'get' and is_success:
 				msg['resp_text'] = 'stop_record'
 			else:
 				msg['resp_text'] = self.__json_data

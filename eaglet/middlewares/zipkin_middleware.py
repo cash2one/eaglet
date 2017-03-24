@@ -4,6 +4,7 @@ import settings
 from eaglet.core.zipkin import zipkin_client
 import logging
 import time
+import json
 # ZipkinRecordTime = 0.5  # 秒
 ZipkinRecordTime = 0  # 秒
 start = 0
@@ -29,4 +30,4 @@ class ZipkinMiddleware(object):
 
         if zipkin_client.zipkin_messages and time.time() - start > ZipkinRecordTime:
             for message in zipkin_client.zipkin_messages:
-                logging.info(message)
+                logging.info(json.dumps(message))

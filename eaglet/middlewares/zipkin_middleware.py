@@ -4,7 +4,8 @@ import settings
 from eaglet.core.zipkin import zipkin_client
 import logging
 import time
-ZipkinRecordTime = 0.5  # 秒
+# ZipkinRecordTime = 0.5  # 秒
+ZipkinRecordTime = 0  # 秒
 start = 0
 
 class ZipkinMiddleware(object):

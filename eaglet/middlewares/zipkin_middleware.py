@@ -28,6 +28,11 @@ class ZipkinMiddleware(object):
 
     def process_response(self, request, response, resource):
 
-        if zipkin_client.zipkin_messages and time.time() - start > ZipkinRecordTime:
+        total_time = time.time() - start
+
+        if hasattr(zipkin_client, 'zipkinClient') and zipkin_client.zipkinClient and total_time > ZipkinRecordTime:
+
+            zipkin_client.zipkinClient.sendMessge(zipkin_client.TYPE_CALL_THIS_SERVICE, total_time)
+
             for message in zipkin_client.zipkin_messages:
                 logging.info(json.dumps(message))

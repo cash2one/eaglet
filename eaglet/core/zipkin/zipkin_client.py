@@ -17,15 +17,16 @@ except BaseException as e:
 TYPE_CALL_SERVICE = 3
 TYPE_CALL_REDIS = 1
 TYPE_CALL_MYSQL = 2
+TYPE_CALL_THIS_SERVICE = -1  # 在当前service里的数据
 
 TYPE2STRING = {
 	TYPE_CALL_MYSQL: 'call_mysql',
 	TYPE_CALL_REDIS: 'call_redis',
-	TYPE_CALL_SERVICE: 'call_service'
+	TYPE_CALL_SERVICE: 'call_service',
+	TYPE_CALL_THIS_SERVICE: 'call_this_service'
 }
 
 
-zipkin_messages = []
 
 
 class ZipkinClient(object):
@@ -38,9 +39,9 @@ class ZipkinClient(object):
 		self.msg = '[zipkin:python]'
 		self.service = service_name
 		self.fZindex = fZindex
+		self.zipkin_messages = []
 
 	def sendMessge(self, type, responseTime, method='', resource='', data='', isCallDownstream=0):
-		global zipkin_messages
 
 		self.zindex += 1
 		self.type = TYPE2STRING[int(type)]

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import time
 import json
 import logging
 try:
@@ -40,6 +40,7 @@ class ZipkinClient(object):
 		self.service = service_name
 		self.fZindex = fZindex
 		self.zipkin_messages = []
+		self.start = time.time()
 
 	def sendMessge(self, type, responseTime, method='', resource='', data='', isCallDownstream=0):
 
@@ -51,9 +52,10 @@ class ZipkinClient(object):
 		self.data = data
 		self.isCallDownstream = isCallDownstream
 		data = self.getData()
+
 		if IS_DEPLOY:
 			# logging.info(json.dumps(data))
-			zipkin_messages.append(data)
+			self.zipkin_messages.append(data)
 
 
 	def getData(self):

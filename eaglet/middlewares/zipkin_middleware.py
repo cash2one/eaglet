@@ -26,7 +26,7 @@ class ZipkinMiddleware(object):
     def process_response(self, request, response, resource):
 
         if hasattr(zipkin_client, 'zipkinClient') and zipkin_client.zipkinClient:
-            total_time = zipkin_client.zipkinClient.start - time.time()
+            total_time = time.time() - zipkin_client.zipkinClient.start
             if total_time > ZipkinRecordTime:
                 zipkin_client.zipkinClient.sendMessge(zipkin_client.TYPE_CALL_THIS_SERVICE, total_time)
 

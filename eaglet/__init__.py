@@ -29,7 +29,7 @@
 # 	except ImportError as e:
 # 		logging.info("ImportError: {}".format(e))
 # 		pass
-__version__ = '1.0.9'
+__version__ = '1.0.10'
 
 VERSION = __version__
 

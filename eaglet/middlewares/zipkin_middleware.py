@@ -5,8 +5,8 @@ from eaglet.core.zipkin import zipkin_client
 import logging
 import time
 import json
-# ZipkinRecordTime = 0.5  # 秒
-ZipkinRecordTime = 0  # 秒
+ZipkinRecordTime = 0.5  # 秒
+# ZipkinRecordTime = 0  # 秒
 
 
 class ZipkinMiddleware(object):
